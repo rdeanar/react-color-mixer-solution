@@ -38,4 +38,33 @@ describe('reducer', () => {
         });
     });
 
+    test('it should only increase `waitingToBeAdded` value on INIT_ADD_COLOR', () => {
+        let state;
+        state = reducer(
+            {colors: [], selected: {}, isLoading: false, waitingToBeAdded: 0},
+            {type: 'INIT_ADD_COLOR', color: {r: 198.87097363521355, g: 39.757631762486994, b: 151.82108960175248}}
+        );
+        expect(state).toEqual({
+            colors: [],
+            selected: {},
+            isLoading: false,
+            waitingToBeAdded: 1
+        });
+    });
+
+    test('it should add color to state and decrease `waitingToBeAdded` on ADD_COLOR', () => {
+        let state;
+        state = reducer({colors: [], selected: {}, isLoading: false, waitingToBeAdded: 5}, {
+            type: 'ADD_COLOR',
+            color: {r: 198.87097363521355, g: 39.757631762486994, b: 151.82108960175248, id: '0xp+6rlhhs39_ew0'}
+        });
+        expect(state).toEqual({
+            colors: [{
+                r: 198.87097363521355,
+                g: 39.757631762486994,
+                b: 151.82108960175248,
+                id: '0xp+6rlhhs39_ew0'
+            }], selected: {}, isLoading: false, waitingToBeAdded: 4
+        });
+    });
 });
