@@ -1,0 +1,68 @@
+.Title {
+  font-size: 150%;
+  font-weight: 800;
+  color: #006dfc;
+}
+
+.Controls {
+  margin: 0.5rem 0 1rem 0;
+}
+
+.Colors {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.Color {
+  margin: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 4rem;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid black;
+  transition: background-color 0.2s ease;
+}
+
+.Color.Selected {
+  background-color: #88a;
+}
+
+.ColorCircle {
+  width: 2rem;
+  height: 2rem;
+  min-width: 2rem;
+  min-height: 2rem;
+  border-radius: 1rem;
+  border: 1px solid black;
+}
+
+.ColorLikes {
+  white-space: nowrap;
+}
+
+.fade-enter {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: scaleX(1);
+  transition: all 0.5s ease;
+}
+
+.fade-exit {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transform: scaleX(0);
+  transition: all 0.5s ease;
+}
