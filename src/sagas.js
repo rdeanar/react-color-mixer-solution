@@ -33,7 +33,7 @@ function* addColor(action) {
       yield serverAddColor(action.color);
       break;
     } catch (err) {
-      console.log("Server responded with error " + err);
+      console.log("Add color: Server responded with error " + err);
     }
   }
 }

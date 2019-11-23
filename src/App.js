@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import {getStringHash} from './utility'
 
 import Color from "./Color";
 
@@ -24,7 +25,7 @@ function App(props) {
   if (props.colors.length > 0) {
     renderedColors = props.colors.map(({ id, likes, ...rgb }) => {
       return (
-        <CSSTransition classNames="fade" timeout={500}>
+          <CSSTransition classNames="fade" timeout={500} key={id}>
           <Color
             likes={likes}
             {...rgb}
@@ -47,7 +48,7 @@ function App(props) {
       <div className="Title">Color Mixer</div>
       <div>{props.isLoading ? "Loading..." : ""}&nbsp;</div>
       <div className="Controls">
-        <button onClick={addColor}>Add random color</button>
+        <button onClick={addRandomColor}>Add random color</button>
         <button
           disabled={Object.keys(props.selected).length < 2}
           onClick={mixColors}
@@ -61,12 +62,21 @@ function App(props) {
   );
 
   // event handlers
-  function addColor() {
-    props.addColor({
+  function addRandomColor() {
+    const colorObject = {
       r: Math.random() * 256,
       g: Math.random() * 256,
-      b: Math.random() * 256
-    });
+      b: Math.random() * 256,
+    };
+    addLocalColor(colorObject);
+  }
+
+  function addLocalColor(colorObject) {
+    let id = getStringHash(JSON.stringify(colorObject));
+    while (props.colors.find((obj) => obj.id === id)) {
+      id += '_duplicate';
+    }
+    props.addColor({...colorObject, id: id});
   }
 
   function mixColors() {
@@ -85,7 +95,7 @@ function App(props) {
     mixedColor.g /= n;
     mixedColor.b /= n;
 
-    props.addColor({ ...mixedColor });
+    addLocalColor({...mixedColor});
     props.unselectAll();
   }
 }
