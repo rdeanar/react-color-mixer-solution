@@ -1,7 +1,8 @@
 const initialState = {
   colors: [],
   selected: {},
-  isLoading: false
+  isLoading: false,
+  waitingToBeAdded: 0,
 };
 
 export function reducer(state = initialState, action) {
@@ -19,10 +20,17 @@ export function reducer(state = initialState, action) {
         isLoading: false
       };
 
+    case "INIT_ADD_COLOR":
+      return {
+        ...state,
+        waitingToBeAdded: state.waitingToBeAdded + 1
+      };
+
     case "ADD_COLOR":
       return {
         ...state,
-        colors: [...state.colors, action.color]
+        colors: [...state.colors, action.color],
+        waitingToBeAdded: state.waitingToBeAdded - 1
       };
 
     case "SELECT_COLOR":

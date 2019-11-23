@@ -23,14 +23,15 @@ function* loadColorsLoop() {
 }
 
 function* watchAddColor() {
-  yield takeEvery("ADD_COLOR", addColor);
+  yield takeEvery("INIT_ADD_COLOR", addColor);
 }
 
 function* addColor(action) {
   // Try to save color until server responds with OK
   while (true) {
     try {
-      yield serverAddColor(action.color);
+      const response = yield serverAddColor(action.color);
+      yield put({type: 'ADD_COLOR', color: {...action.color, id: response}});
       break;
     } catch (err) {
       console.log("Add color: Server responded with error " + err);
