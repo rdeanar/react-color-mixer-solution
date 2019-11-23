@@ -14,9 +14,18 @@ export function reducer(state = initialState, action) {
       };
 
     case "COLORS_LOADED":
+      let remainSelected = {};
+
+      for (const color of action.colors) {
+        if (state.selected[color.id]) {
+          remainSelected[color.id] = true;
+        }
+      }
+      
       return {
         ...state,
         colors: action.colors,
+        selected: remainSelected,
         isLoading: false
       };
 
